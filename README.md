@@ -13,6 +13,7 @@ In this repo you're going to find a VPC and underlying resources creation
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:-----:|
 | assign\_public\_ips\_on\_launch | Will resources in public subnets get public IP during creation? | `bool` | `true` | no |
+| custom\_eips\_for\_nat | Pass custom EIPs if you have some already, otherwise they will be created by the module | `map(string)` | `{}` | no |
 | db\_subnet\_tags | Tags which are going to be attached to all DB subnets | `map(string)` | `{}` | no |
 | db\_subnets | CIDR blocks for subnets | `map(string)` | `{}` | no |
 | enable\_dns\_hostnames | Enable/disable DNS Hostnames in the VPC | `bool` | `false` | no |

@@ -86,3 +86,9 @@ variable "db_subnet_tags" {
   description = "Tags which are going to be attached to all DB subnets"
   default     = {}
 }
+
+variable "custom_eips_for_nat" {
+  type        = map(string)
+  default     = {}
+  description = "Pass custom EIPs if you have some already, otherwise they will be created by the module"
+}
