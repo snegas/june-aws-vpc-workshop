@@ -38,3 +38,51 @@ variable "enable_dns_hostnames" {
   default     = false
   description = "Enable/disable DNS Hostnames in the VPC"
 }
+
+variable "public_subnets" {
+  type        = map(string)
+  default     = {}
+  description = "CIDR blocks for subnets"
+}
+
+variable "private_subnets" {
+  type        = map(string)
+  default     = {}
+  description = "CIDR blocks for subnets"
+}
+
+variable "db_subnets" {
+  type        = map(string)
+  default     = {}
+  description = "CIDR blocks for subnets"
+}
+
+variable "assign_public_ips_on_launch" {
+  type        = bool
+  default     = true
+  description = "Will resources in public subnets get public IP during creation?"
+}
+
+variable "subnet_tags" {
+  type        = map(string)
+  description = "Tags which are going to be attached to all subnets"
+  default     = {}
+}
+
+variable "public_subnet_tags" {
+  type        = map(string)
+  description = "Tags which are going to be attached to all public subnets"
+  default     = {}
+}
+
+variable "private_subnet_tags" {
+  type        = map(string)
+  description = "Tags which are going to be attached to all private subnets"
+  default     = {}
+}
+
+variable "db_subnet_tags" {
+  type        = map(string)
+  description = "Tags which are going to be attached to all DB subnets"
+  default     = {}
+}

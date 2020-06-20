@@ -7,6 +7,6 @@ resource "aws_vpc" "default" {
   enable_dns_support   = var.enable_dns_support
 
   tags = merge(var.tags, var.vpc_tags, {
-    "Name" = "${var.prefix}-vpc"
+    Name = "${var.prefix}-vpc"
   })
 }
