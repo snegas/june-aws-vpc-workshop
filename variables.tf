@@ -92,3 +92,21 @@ variable "custom_eips_for_nat" {
   default     = {}
   description = "Pass custom EIPs if you have some already, otherwise they will be created by the module"
 }
+
+variable "create_dynamodb_vpc_endpoint" {
+  type        = bool
+  default     = true
+  description = "Create VPC enpoint associated with private subnets"
+}
+
+variable "create_s3_vpc_endpoint" {
+  type        = bool
+  default     = true
+  description = "Create VPC enpoint associated with private subnets"
+}
+
+variable "create_secrets_manager_vpc_endpoint" {
+  type        = bool
+  default     = true
+  description = "Create VPC enpoint associated with private subnets"
+}
