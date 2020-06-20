@@ -1,6 +1,98 @@
 # june-aws-vpc-workshop
 In this repo you're going to find a VPC and underlying resources creation
 
+## Usage example
+
+```
+provider "aws" {
+  region = "us-east-1"
+}
+
+locals {
+  vpc_cidr = "10.0.0.0/16"
+}
+
+module "vpc" {
+  source = "./../june-aws-vpc-workshop"
+
+  prefix = "june-workshop"
+  vpc_cidr = local.vpc_cidr
+
+  tags = {
+    Environment = "test"
+  }
+
+  vpc_tags = {
+    SomeVPCTag = "true"
+  }
+
+  public_subnets = {
+    "a" = cidrsubnet(local.vpc_cidr, 4, 0)
+    "b" = cidrsubnet(local.vpc_cidr, 4, 1)
+  }
+
+  private_subnets = {
+    "a" = cidrsubnet(local.vpc_cidr, 4, 2)
+    "b" = cidrsubnet(local.vpc_cidr, 4, 3)
+  }
+
+  db_subnets = {
+    "a" = cidrsubnet(local.vpc_cidr, 4, 4)
+    "b" = cidrsubnet(local.vpc_cidr, 4, 5)
+  }
+}
+
+data "aws_ami" "ubuntu" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["099720109477"] # Canonical
+}
+
+resource "aws_instance" "public" {
+  ami = data.aws_ami.ubuntu.id
+  instance_type = "t3.micro"
+  key_name = "june-workshop"
+  subnet_id = module.vpc.public_subnets.ids[0]
+
+  tags = {
+    Name = "public"
+  }
+}
+
+resource "aws_instance" "private" {
+  ami = data.aws_ami.ubuntu.id
+  instance_type = "t3.micro"
+  key_name = "june-workshop"
+  subnet_id = module.vpc.private_subnets.ids[0]
+
+  tags = {
+    Name = "private"
+  }
+}
+
+
+resource "aws_instance" "db" {
+  ami = data.aws_ami.ubuntu.id
+  instance_type = "t3.micro"
+  key_name = "june-workshop"
+  subnet_id = module.vpc.db_subnets.ids[0]
+
+  tags = {
+    Name = "db"
+  }
+}
+```
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Providers
 
